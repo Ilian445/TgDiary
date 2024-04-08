@@ -4,7 +4,6 @@ import sqlite3
 import datetime
 from datetime import *
 from telebot import types
-import os
 
 
 
@@ -12,7 +11,7 @@ import os
 version = '0.2'
 
 #Настройка бота
-token=os.environ.get('TOKEN')
+token='6937325461:AAF5VOfMqsm9gb9fxr9OXMTurDV8SpxYLYI'
 
 bot=telebot.TeleBot(token)
 
@@ -177,7 +176,7 @@ def read(id, subject):
 def start_message(message):
 
   #Приветственное сообщение
-  bot.send_message(message.chat.id,"Привет ✌️, этот бот поможет записывать дз в телеграм! Помощь - /help")
+  bot.send_message(message.chat.id,"Привет ✌️, этот бот поможет записывать дз в телеграм! Новости бота - @ilian445_ch. Помощь - /help")
   id = message.from_user.id
 
   #Подключение к бд
@@ -189,6 +188,7 @@ def start_message(message):
   ids = cur.fetchall()
 
   #Проверяем зарегестрован ли пользователь, если нет, то регистрируем
+  find = False
   for i in range (0, len(ids)):
     current = ids[i]
     if current[0] == id:
@@ -524,7 +524,7 @@ def help(message):
   markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
   menu_btn = types.KeyboardButton('⬅️ В меню')
   markup.add(menu_btn)
-  bot.send_message(message.from_user.id, f'Привет, {message.from_user.first_name}! Этот бот поможет тебе вести школьный дневник прямо в телеграм, для того, чтобы перейти в основное меню используй /menu, также для быстрого доступа к записи и выводу дз можно исользовать команды /enter и /print. Проект полностью бесплатный и без рекламы, поэтому раззработчик будет очень рад донатикам, реквизиты можно глянуть здесь - /donate. На этом вроде всё, если понадобиться помощь, то обращайся - /help\n\nРазработчик: @ilian_meta\nВерсия: {version}', reply_markup=markup)
+  bot.send_message(message.from_user.id, f'Привет, {message.from_user.first_name}! Этот бот поможет тебе вести школьный дневник прямо в телеграм, для того, чтобы перейти в основное меню используй /menu, также для быстрого доступа к записи и выводу дз можно исользовать команды /enter и /print. Проект полностью бесплатный, поэтому раззработчик будет очень рад донатикам, реквизиты можно глянуть здесь - /donate. Для быстрого доступа к записи или чтению дз по одному предмету используй:\n/russian\n/literature\n/history\n/sf\n/geography\n/obj\n/lang\n/physics\n/chemestry\n/biology\n/it\n/technology\n/music\n/art\n/geometry\n/algebra\n Чтобы просмотреть дз по предметами, просто введи команду предмета, а чтобы записать введи команду предмета и через пробел дз.\nНа этом вроде всё, если понадобиться помощь, то обращайся - /help\n\nРазработчик: @ilian445_meta\nВерсия: {version}', reply_markup=markup)
   bot.register_next_step_handler(message, reg_help)
 
 def reg_help(message):
@@ -551,7 +551,7 @@ def donate(message):
   markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
   menu_btn = types.KeyboardButton('⬅️ В меню')
   markup.add(menu_btn)
-  bot.send_message(message.from_user.id, 'Задонатить на хостинг или печеньки разработчику можно тут, пожалуйста в комментариях к переводу указывайте что это донат и на что он)))\nTinkoff: 2200700771729976\nAlfa-bank: 2200150959802023\nQiWi: https://qiwi.com/n/ILIAN445\nTON: EQDOi-f39PBbaD_1kO6zNZVacjVPwrk_JZnphuzIw_hq-Voy\nBTC: 1M1E4AAcKsipvj9w8fndMnfvHHQ8cKG7d1\n', reply_markup=markup)
+  bot.send_message(message.from_user.id, 'Задонатить на хостинг или печеньки разработчику можно тут, пожалуйста в комментариях к переводу указывайте что это донат и на что он)))\nСБП: 89136307707\nTinkoff: 2200700771729976\nAlfa-bank: 2200150959802023\nСбербанк: 2202206397626115\nTON: EQDOi-f39PBbaD_1kO6zNZVacjVPwrk_JZnphuzIw_hq-Voy\nТакже вы можете поддержать подпиской на Telegram-канал: @ilian445_ch', reply_markup=markup)
   bot.register_next_step_handler(message, reg_donate)
 
 def reg_donate(message):
