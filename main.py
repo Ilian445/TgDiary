@@ -4,25 +4,56 @@ import sqlite3
 import datetime
 from datetime import *
 from telebot import types
+import os
 
 
 
 #Настройки версии
-version = '1.2b'
-
+version = '0.2'
 
 #Настройка бота
-token='5339912132:AAGD19BVyoH8aKF9Aha6m88PAA2BGRxjyGU'
+token=os.environ.get('TOKEN')
 
 bot=telebot.TeleBot(token)
 
-commands =['start', 'help', 'donate', 'print', 'menu', 'enter', 'settings', 'russian', 'literature', 'history', 'sf', 'geography', 'obj', 'lang', 'physics', 'chemestry', 'biology', 'it', 'technology', 'music', 'art', 'geometry', 'algebra']
+comma =['/start', '/help', '/donate', '/print', '/menu', '/enter', '/settings', '/russian', '/literature', '/history', '/sf', '/geography', '/obj', '/lang', '/physics', '/chemestry', '/biology', '/it', '/technology', '/music', '/art', '/geometry', '/algebra']
 
 
 
 #Функции
+#Распознование команд
+def commander(message):
+  if message.text == '/help':
+    help(message)
+  elif message.text == '/donate':
+    donate(message)
+  elif message.text == '/print':
+    f_print_dz(message)
+  elif message.text == '/menu':
+    menu(message)
+  elif message.text == '/enter':
+    f_enter_dz(message)
+  elif message.text == '/settings':
+    settings(message)
+  elif message.text == '/russian' or '/literature' or '/history' or '/sf' or '/geography' or '/obj' or '/lang' or '/physics' or '/chemestry' or '/biology' or '/it' or '/technology' or '/music' or '/art' or '/geometry' or '/algebra':
+    sci(message)
+  else:
+    with open("logs.txt", "a") as file:
+      time = datetime.now()
+      file.write(f"{time}   Error: 43 unknown command    ID: {message.from_user.id}    Text: {message.text}\n")
+      bot.send_message(message.from_user.id,"Извините, неверная нажата неверная кнопка, попробуйте ещё раз или свяжитесь с технической поддержкой в настройках - /settings")
+
+
 #Функция записи
 def write(id, text, subject, message):
+
+  def end01():
+
+    bot.register_next_step_handler(message, end_enter_dz)
+
+    cur.close()
+    conn.close()
+
   #global message
   conn = sqlite3.connect('data.db')
   cur = conn.cursor()
@@ -33,86 +64,99 @@ def write(id, text, subject, message):
   markup2.add(menu_btn2, add_btn2)
 
 
-  if subject == 'geometry':
+  if message.text in comma:
+    commander(message)
+  elif subject == 'geometry':
     cur.execute(f"UPDATE data SET geometry = '{text}' WHERE id = '{id}'")
     conn.commit()
     bot.send_message(id,"✅ Дз по геометрии записано", reply_markup=markup2)
+    end01()
   elif subject == 'algebra':
     cur.execute(f"UPDATE data SET algebra = '{text}' WHERE id = '{id}'")
     conn.commit()
     bot.send_message(id,"✅ Дз по алгебре записано", reply_markup=markup2)
+    end01()
   elif subject == 'art':
     cur.execute(f"UPDATE data SET art = '{text}' WHERE id = '{id}'")
     conn.commit()
     bot.send_message(id,"✅ Дз по ИЗО записано", reply_markup=markup2)
+    end01()
   elif subject == 'music':
     cur.execute(f"UPDATE data SET music = '{text}' WHERE id = '{id}'")
     conn.commit()
     bot.send_message(id,"✅ Дз по музыке записано", reply_markup=markup2)
+    end01()
   elif subject == 'technology':
     cur.execute(f"UPDATE data SET technology = '{text}' WHERE id = '{id}'")
     conn.commit()
     bot.send_message(id,"✅ Дз по технологии записано", reply_markup=markup2)
+    end01()
   elif subject == 'IT':
     cur.execute(f"UPDATE data SET IT = '{text}' WHERE id = '{id}'")
     conn.commit()
     bot.send_message(id,"✅ Дз по информатике записано", reply_markup=markup2)
+    end01()
   elif subject == 'algebra':
     cur.execute(f"UPDATE data SET algebra = '{text}' WHERE id = '{id}'")
     conn.commit()
     bot.send_message(id,"✅ Дз по алгебре записано", reply_markup=markup2)
+    end01()
   elif subject == 'biology':
     cur.execute(f"UPDATE data SET biology = '{text}' WHERE id = '{id}'")
     conn.commit()
     bot.send_message(id,"✅ Дз по биологии записано", reply_markup=markup2)
+    end01()
   elif subject == 'chemestry':
     cur.execute(f"UPDATE data SET chemestry = '{text}' WHERE id = '{id}'")
     conn.commit()
-    bot.send_message(id,"✅ Дз по химмии записано", reply_markup=markup2)    
+    bot.send_message(id,"✅ Дз по химии записано", reply_markup=markup2)
+    end01()
   elif subject == 'physics':
     cur.execute(f"UPDATE data SET physics = '{text}' WHERE id = '{id}'")
     conn.commit()
-    bot.send_message(id,"✅ Дз по физике записано", reply_markup=markup2) 
+    bot.send_message(id,"✅ Дз по физике записано", reply_markup=markup2)
+    end01()
   elif subject == 'lang':
     cur.execute(f"UPDATE data SET lang = '{text}' WHERE id = '{id}'")
     conn.commit()
-    bot.send_message(id,"✅ Дз по иностранному языку записано", reply_markup=markup2)  
+    bot.send_message(id,"✅ Дз по иностранному языку записано", reply_markup=markup2)
+    end01()
   elif subject == 'obj':
     cur.execute(f"UPDATE data SET obj = '{text}' WHERE id = '{id}'")
     conn.commit()
     bot.send_message(id,"✅ Дз по ОБЖ записано", reply_markup=markup2)
+    end01()
   elif subject == 'geography':
     cur.execute(f"UPDATE data SET geography = '{text}' WHERE id = '{id}'")
     conn.commit()
     bot.send_message(id,"✅ Дз по географии записано", reply_markup=markup2)
+    end01()
   elif subject == 'sf':
     cur.execute(f"UPDATE data SET sf = '{text}' WHERE id = '{id}'")
     conn.commit()
-    bot.send_message(id,"✅ Дз по обществознанию записано", reply_markup=markup2) 
+    bot.send_message(id,"✅ Дз по обществознанию записано", reply_markup=markup2)
+    end01()
   elif subject == 'history':
     cur.execute(f"UPDATE data SET history = '{text}' WHERE id = '{id}'")
     conn.commit()
     bot.send_message(id,"✅ Дз по истории записано", reply_markup=markup2)
+    end01()
   elif subject == 'literature':
     cur.execute(f"UPDATE data SET literature = '{text}' WHERE id = '{id}'")
     conn.commit()
     bot.send_message(id,"✅ Дз по литературе записано", reply_markup=markup2)
+    end01()
   elif subject == 'russian':
     cur.execute(f"UPDATE data SET russian = '{text}' WHERE id = '{id}'")
     conn.commit()
     bot.send_message(id,"✅ Дз по русскому языку записано", reply_markup=markup2)
-  elif message.text in commands:
-    pass
+    end01()
   else:
     with open("logs.txt", "a") as file:
       time = datetime.now()
       file.write(f"{time}   Error: unknown subject key    ID: {id}    Subject:{subject}    Text: {text}\n")
       bot.send_message(id,"😢 Произошла техническая ошибка, попробуйте попробовать еще раз или напишите в поддержку в настройках", reply_markup=markup2)
 
-  bot.register_next_step_handler(message, end_enter_dz)
-
-  cur.close()
-  conn.close()
 
 #Функция чтения
 def read(id, subject):
@@ -126,7 +170,6 @@ def read(id, subject):
 
   cur.close()
   conn.close()
-
 
 
 #Регистрация
@@ -202,7 +245,9 @@ def print_dz(message):
 
   stop12 = 'False'
 
-  if message.text == '0️⃣  Алгебра':
+  if message.text in comma:
+    stop12 = 'command'
+  elif message.text == '0️⃣  Алгебра':
     read(message.from_user.id, 'algebra')
     dz = dz + '0️⃣  Алгебра: ' + dz_text[0] +'\n'
 
@@ -271,13 +316,11 @@ def print_dz(message):
     
   elif message.text == '⬅️ В меню':
     stop12 = 'menu'
-  elif message.text in commands:
-    pass
   else:
     with open("logs.txt", "a") as file:
       time = datetime.now()
       file.write(f"{time}   Error: unknown button key    ID: {message.from_user.id}    Text: {message.text}\n")
-      #bot.send_message(message.from_user.id,"Извините, неверная нажата неверная кнопка, попробуйте ещё раз или свяжитесь с технической поддержкой в настройках - /settings")
+      bot.send_message(message.from_user.id,"Извините, неверная нажата неверная кнопка, попробуйте ещё раз или свяжитесь с технической поддержкой в настройках - /settings")
 
   markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
   algebra_btn = types.KeyboardButton("0️⃣  Алгебра")
@@ -315,6 +358,8 @@ def print_dz(message):
   elif stop12 == 'menu':
     menu(message)
 
+  elif stop12 == 'command':
+    commander(message)
   else:
     with open("logs.txt", "a") as file:
       time = datetime.now()
@@ -334,20 +379,19 @@ def menu(message):
   bot.register_next_step_handler(message, register_menu)
 
 def register_menu(message):
-  if message.text == '➕ Записать д/з':
+  if message.text in comma:
+    commander(message)
+  elif message.text == '➕ Записать д/з':
     f_enter_dz(message)
   elif message.text == '🔢 Показать дз':
     f_print_dz(message)
   elif message.text == '⚙️ Настройки':
     #bot.answer_callback_query(callback_query_id=message.from_user.id, text="⚙️ В разработке ⚙️", show_alert=True)
     bot.register_next_step_handler(message, menu)
-  elif message.text in commands:
-    start(message)
   else:
     with open("logs.txt", "a") as file:
       time = datetime.now()
       file.write(f"{time}   Error: unknown button key    ID: {message.from_user.id}    Text: {message.text}\n")
-
 
 
 #Ввод дз
@@ -379,9 +423,12 @@ def f_enter_dz(message):
 
 def enter_dz(message):
   global subgect
-  stop01 = False
+  stop01 = 'False'
 
-  if message.text == '0️⃣  Алгебра':
+  if message.text in comma:
+    stop01 = 'command'
+
+  elif message.text == '0️⃣  Алгебра':
     subgect = 'algebra'
 
   elif message.text == '📐 Геометрия':
@@ -430,35 +477,38 @@ def enter_dz(message):
     subgect = 'history'
     
   elif message.text == '⬅️ В меню':
-    stop01 = True
+    stop01 = 'True'
 
   else:
     with open("logs.txt", "a") as file:
       time = datetime.now()
       file.write(f"{time}   Error: unknown button key    ID: {message.from_user.id}    Text: {message.text}\n")
 
-  if stop01 == False:
+  if stop01 == 'False':
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     menu_btn = types.KeyboardButton('⬅️ В меню')
     markup.add(menu_btn)
-    bot.send_message(message.from_user.id, f'Введите дз по предмету "{message.text}" :', reply_markup=markup)
+    bot.send_message(message.from_user.id, f'Введите дз по предмету {message.text} :', reply_markup=markup)
     bot.register_next_step_handler(message, reg_enter_dz)
-
+  elif stop01 == 'command':
+    commander(message)
   else:
     menu(message)
 
 def reg_enter_dz(message):
   global subgect
 
-  if message.text == '⬅️ В меню':
+  if message.text in comma:
+    commander(message)
+  elif message.text == '⬅️ В меню':
     menu(message)
-  elif message.text in commands:
-    pass
   else:
     write(message.from_user.id, message.text, subgect, message)
 
 def end_enter_dz(message):
-  if message.text == '⬅️ В меню':
+  if message.text in comma:
+    commander(message)
+  elif message.text == '⬅️ В меню':
     menu(message)
   elif message.text == '➕ Записать ещё':
     f_enter_dz(message)
@@ -478,20 +528,10 @@ def help(message):
   bot.register_next_step_handler(message, reg_help)
 
 def reg_help(message):
-  if message.text == '⬅️ В меню':
+  if message.text in comma:
+    commander(message)
+  elif message.text == '⬅️ В меню':
     menu(message)
-  elif message.text == '/start':
-    start(message)
-  elif message.text == '/menu':
-    menu(message)
-  elif message.text == '/help':
-    help(message)
-  elif message.text == '/settings':
-    settings(message)
-  elif message.text == '/enter':
-    f_enter_dz(message)
-  elif message.text == '/donate':
-    donate(message)
   else:
     with open("logs.txt", "a") as file:
       time = datetime.now()
@@ -501,7 +541,7 @@ def reg_help(message):
 #Настройки
 @bot.message_handler(commands=['settings'])
 def settings(message):
-  bot.send_message(message.from_user.id, 'Настройки пока что не готовы, но скоро будут', reply_markup=markup)
+  bot.send_message(message.from_user.id, 'Настройки пока что не готовы, но скоро будут, поддержка - @giant47', reply_markup=markup)
   menu(message)
 
 
@@ -515,20 +555,10 @@ def donate(message):
   bot.register_next_step_handler(message, reg_donate)
 
 def reg_donate(message):
-  if message.text == '⬅️ В меню':
+  if message.text in comma:
+    commander(message)
+  elif message.text == '⬅️ В меню':
     menu(message)
-  elif message.text == '/start':
-    start(message)
-  elif message.text == '/menu':
-    menu(message)
-  elif message.text == '/help':
-    help(message)
-  elif message.text == '/settings':
-    settings(message)
-  elif message.text == '/enter':
-    f_enter_dz(message)
-  elif message.text == '/donate':
-    donate(message)
   else:
     with open("logs.txt", "a") as file:
       time = datetime.now()
@@ -571,22 +601,12 @@ def sci(message):
       
 
 def reg_sci(message):
-  if message.text == '⬅️ В меню':
+  if message.text in comma:
+    commander(message)
+  elif message.text == '⬅️ В меню':
     menu(message)
   elif message.text == '➕ Записать дз':
     f_enter_dz(message)
-  elif message.text == '/start':
-    start(message)
-  elif message.text == '/menu':
-    menu(message)
-  elif message.text == '/help':
-    help(message)
-  elif message.text == '/settings':
-    settings(message)
-  elif message.text == '/enter':
-    f_enter_dz(message)
-  elif message.text == '/donate':
-    donate(message)
   else:
     with open("logs.txt", "a") as file:
       time = datetime.now()
