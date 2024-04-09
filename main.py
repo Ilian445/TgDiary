@@ -9,10 +9,10 @@ import os
 
 
 #Настройки версии
-version = '0.2'
+version = '2.1'
 
 #Настройка бота
-token=os.environ.get('TOKEN')
+token='6937325461:AAHCG3EfZ46foPuJxcUuNdTh7WmdxsArXrA'
 
 bot=telebot.TeleBot(token)
 
@@ -55,7 +55,7 @@ def write(id, text, subject, message):
     conn.close()
 
   #global message
-  conn = sqlite3.connect('/root/tgdiary/data/data.db')
+  conn = sqlite3.connect('data.db')
   cur = conn.cursor()
 
   markup2 = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -161,7 +161,7 @@ def write(id, text, subject, message):
 #Функция чтения
 def read(id, subject):
   global dz_text
-  conn = sqlite3.connect('/root/tgdiary/data/data.db')
+  conn = sqlite3.connect('data.db')
   cur = conn.cursor()
 
   cur.execute(f'SELECT ({subject}) FROM data WHERE id = ({id})')
@@ -181,7 +181,7 @@ def start_message(message):
   id = message.from_user.id
 
   #Подключение к бд
-  conn = sqlite3.connect('/root/tgdiary/data/data.db')
+  conn = sqlite3.connect('data.db')
   cur = conn.cursor()
 
   #Достаём список пользователей из бд
