@@ -9,12 +9,14 @@ import os
 
 
 #Настройки версии
-version = '2.1'
+version = '2.1a'
 
 #Настройка бота
-token='6937325461:AAHCG3EfZ46foPuJxcUuNdTh7WmdxsArXrA'
+token='6937325461:AAEG0fj7BhnR9mvz0Q2DAMgHluN33F1o_VY'
 
 bot=telebot.TeleBot(token)
+
+dz = ''
 
 comma =['/start', '/help', '/donate', '/print', '/menu', '/enter', '/settings', '/russian', '/literature', '/history', '/sf', '/geography', '/obj', '/lang', '/physics', '/chemestry', '/biology', '/it', '/technology', '/music', '/art', '/geometry', '/algebra']
 
@@ -210,7 +212,7 @@ def start_message(message):
 
 
 #Вывод дз
-@bot.message_handler(commands=['print'])
+@bot.message_handler(commands=['schedule', 'dz'])
 def f_print_dz(message):
 
   global dz
@@ -233,10 +235,9 @@ def f_print_dz(message):
   sf_btn = types.KeyboardButton("🙍‍♂️ Общестовзнание")
   geography_btn = types.KeyboardButton("🗺️ География")
   history_btn = types.KeyboardButton("⚱️ История")
-  end_btn = types.KeyboardButton("🔢 Показать расписание")
   menu_btn = types.KeyboardButton('⬅️ В меню')
 
-  markup.add(algebra_btn, geometry_btn, art_btn, music_btn, technology_btn, it_btn, biology_btn, chemestry_btn, physics_btn, lang_btn, obj_btn,lit_btn,ru_btn,sf_btn,history_btn,geography_btn, end_btn, menu_btn)
+  markup.add(algebra_btn, geometry_btn, art_btn, music_btn, technology_btn, it_btn, biology_btn, chemestry_btn, physics_btn, lang_btn, obj_btn,lit_btn,ru_btn,sf_btn,history_btn,geography_btn, menu_btn)
   bot.send_message(message.from_user.id, f'Выберите предмет:', reply_markup=markup)
   bot.register_next_step_handler(message,print_dz)
 
@@ -250,67 +251,67 @@ def print_dz(message):
     stop12 = 'command'
   elif message.text == '0️⃣  Алгебра':
     read(message.from_user.id, 'algebra')
-    dz = dz + '0️⃣  Алгебра: ' + dz_text[0] +'\n'
+    dz = dz + '0️⃣  Алгебра: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '📐 Геометрия':
     read(message.from_user.id, 'geometry')
-    dz = dz + '📐 Геометрия: ' + dz_text[0] +'\n'
+    dz = dz + '📐 Геометрия: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '🖌️ ИЗО':
     read(message.from_user.id, 'art')
-    dz = dz + '🖌️ ИЗО: ' + dz_text[0] +'\n'
+    dz = dz + '🖌️ ИЗО: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '🎼 Музыка':
     read(message.from_user.id, 'music')
-    dz = dz + '🎼 Музыка: ' + dz_text[0] +'\n'
+    dz = dz + '🎼 Музыка: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '🗜️ Технология':
     read(message.from_user.id, 'technology')
-    dz = dz + '🗜️ Технология: ' + dz_text[0] +'\n'
+    dz = dz + '🗜️ Технология: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '🖥️ Информатика':
     read(message.from_user.id, 'IT')
-    dz = dz + '🖥️ Информатика: ' + dz_text[0] +'\n'
+    dz = dz + '🖥️ Информатика: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '🌱 Биология':
     read(message.from_user.id, 'biology')
-    dz = dz + '🌱 Биология: ' + dz_text[0] +'\n'
+    dz = dz + '🌱 Биология: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '🧪 Химия':
     read(message.from_user.id, 'chemestry')
-    dz = dz + '🧪 Химия: ' + dz_text[0] +'\n'
+    dz = dz + '🧪 Химия: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '💡 Физика':
     read(message.from_user.id, 'physics')
-    dz = dz + '💡 Физика: ' + dz_text[0] +'\n'
+    dz = dz + '💡 Физика: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '🔤 Иностранный язык':
     read(message.from_user.id, 'lang')
-    dz = dz + '🔤 Иностранный язык: ' + dz_text[0] +'\n'
+    dz = dz + '🔤 Иностранный язык: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '🛟 ОБЖ':
     read(message.from_user.id, 'obj')
-    dz = dz + '🛟 ОБЖ: ' + dz_text[0] +'\n'
+    dz = dz + '🛟 ОБЖ: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '📕 Литература':
     read(message.from_user.id, 'literature')
-    dz = dz + '📕 Литература: ' + dz_text[0] +'\n'
+    dz = dz + '📕 Литература: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '🖊️ Русский':
     read(message.from_user.id, 'russian')
-    dz = dz + '🖊️ Русский: ' + dz_text[0] +'\n'
+    dz = dz + '🖊️ Русский: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '🙍‍♂️ Общестовзнание':
     read(message.from_user.id, 'sf')
-    dz = dz + '🙍‍♂️ Общестовзнание: ' + dz_text[0] +'\n'
+    dz = dz + '🙍‍♂️ Общестовзнание: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '🗺️ География':
     read(message.from_user.id, 'geography')
-    dz = dz + '🗺️ География: ' + dz_text[0] +'\n'
+    dz = dz + '🗺️ География: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '⚱️ История':
     read(message.from_user.id, 'history')
-    dz = dz + '⚱️ История: ' + dz_text[0] +'\n'
+    dz = dz + '⚱️ История: ' + str(dz_text[0]) +'\n'
 
   elif message.text == '🔢 Показать расписание':
     stop12 = 'True'
@@ -367,15 +368,136 @@ def print_dz(message):
       file.write(f"{time}   Error: unknown stop12 value    ID: {message.from_user.id}    Text: {message.text}\n")
       bot.send_message(message.from_user.id,"Извините, возникла внутренняя ошибка, попробуйте ещё раз или свяжитесь с технической поддержкой в настройках - /settings")
 
+@bot.message_handler(commands=['print', 'hw', 'homework', 'dz'])
+def f_print_hw(message):
+  global dz
+  dz = ''
+
+  markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+  algebra_btn = types.KeyboardButton("0️⃣  Алгебра")
+  geometry_btn = types.KeyboardButton("📐 Геометрия")
+  art_btn = types.KeyboardButton("🖌️ ИЗО")
+  music_btn = types.KeyboardButton("🎼 Музыка")
+  technology_btn = types.KeyboardButton("🗜️ Технология")
+  it_btn = types.KeyboardButton("🖥️ Информатика")
+  biology_btn = types.KeyboardButton("🌱 Биология")
+  chemestry_btn = types.KeyboardButton("🧪 Химия")
+  physics_btn = types.KeyboardButton("💡 Физика")
+  lang_btn = types.KeyboardButton("🔤 Иностранный язык")
+  obj_btn = types.KeyboardButton("🛟 ОБЖ")
+  lit_btn = types.KeyboardButton("📕 Литература")
+  ru_btn = types.KeyboardButton("🖊️ Русский")
+  sf_btn = types.KeyboardButton("🙍‍♂️ Общестовзнание")
+  geography_btn = types.KeyboardButton("🗺️ География")
+  history_btn = types.KeyboardButton("⚱️ История")
+  menu_btn = types.KeyboardButton('⬅️ В меню')
+
+  markup.add(algebra_btn, geometry_btn, art_btn, music_btn, technology_btn, it_btn, biology_btn, chemestry_btn, physics_btn, lang_btn, obj_btn,lit_btn,ru_btn,sf_btn,history_btn,geography_btn, menu_btn)
+  bot.send_message(message.from_user.id, f'Выберите предмет:', reply_markup=markup)
+  bot.register_next_step_handler(message,print_hw)
+
+def print_hw(message):
+  global dz
+  stop12='False'
+
+  if message.text in comma:
+    stop12 = 'command'
+  elif message.text == '0️⃣  Алгебра':
+    read(message.from_user.id, 'algebra')
+    dz = dz + '0️⃣  Алгебра: ' + str(dz_text[0]) +'\n'
+  elif message.text == '📐 Геометрия':
+    read(message.from_user.id, 'geometry')
+    dz = dz + '📐 Геометрия: ' + str(dz_text[0]) +'\n'
+  elif message.text == '🖌️ ИЗО':
+    read(message.from_user.id, 'art')
+    dz = dz + '🖌️ ИЗО: ' + str(dz_text[0]) +'\n'
+  elif message.text == '🎼 Музыка':
+    read(message.from_user.id, 'music')
+    dz = dz + '🎼 Музыка: ' + str(dz_text[0]) +'\n'
+  elif message.text == '🗜️ Технология':
+    read(message.from_user.id, 'technology')
+    dz = dz + '🗜️ Технология: ' + str(dz_text[0]) +'\n'
+  elif message.text == '🖥️ Информатика':
+    read(message.from_user.id, 'IT')
+    dz = dz + '🖥️ Информатика: ' + str(dz_text[0]) +'\n'
+  elif message.text == '🌱 Биология':
+    read(message.from_user.id, 'biology')
+    dz = dz + '🌱 Биология: ' + str(dz_text[0]) +'\n'
+  elif message.text == '🧪 Химия':
+    read(message.from_user.id, 'chemestry')
+    dz = dz + '🧪 Химия: ' + str(dz_text[0]) +'\n'
+  elif message.text == '💡 Физика':
+    read(message.from_user.id, 'physics')
+    dz = dz + '💡 Физика: ' + str(dz_text[0]) +'\n'
+  elif message.text == '🔤 Иностранный язык':
+    read(message.from_user.id, 'lang')
+    dz = dz + '🔤 Иностранный язык: ' + str(dz_text[0]) +'\n'
+  elif message.text == '🛟 ОБЖ':
+    read(message.from_user.id, 'obj')
+    dz = dz + '🛟 ОБЖ: ' + str(dz_text[0]) +'\n'
+  elif message.text == '📕 Литература':
+    read(message.from_user.id, 'literature')
+    dz = dz + '📕 Литература: ' + str(dz_text[0]) +'\n'
+  elif message.text == '🖊️ Русский':
+    read(message.from_user.id, 'russian')
+    dz = dz + '🖊️ Русский: ' + str(dz_text[0]) +'\n'
+  elif message.text == '🙍‍♂️ Общестовзнание':
+    read(message.from_user.id, 'sf')
+    dz = dz + '🙍‍♂️ Общестовзнание: ' + str(dz_text[0]) +'\n'
+  elif message.text == '🗺️ География':
+    read(message.from_user.id, 'geography')
+    dz = dz + '🗺️ География: ' + str(dz_text[0]) +'\n'
+  elif message.text == '⚱️ История':
+    read(message.from_user.id, 'history')
+    dz = dz + '⚱️ История: ' + str(dz_text[0]) +'\n'
+  elif message.text == '⬅️ В меню':
+    stop12 = 'menu'
+  else:
+    with open("logs.txt", "a") as file:
+      time = datetime.now()
+      file.write(f"{time}   Error: unknown button key (453 str)   ID: {message.from_user.id}    Text: {message.text}\n")
+      bot.send_message(message.from_user.id,"Извините, неверная нажата неверная кнопка, попробуйте ещё раз или свяжитесь с технической поддержкой в настройках - /settings")
+
+  if stop12 == 'False':
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    menu_btn = types.KeyboardButton('⬅️ В меню')
+    etc_btn = types.KeyboardButton('📄 Показать ещё')
+    markup.add(menu_btn, etc_btn)
+    bot.send_message(message.from_user.id, text=dz, reply_markup=markup)
+    dz = ''
+    bot.register_next_step_handler(message, end_print_hw)
+  elif stop12 == 'menu':
+    menu(message)
+  elif stop12 == 'command':
+    commander(message)
+  else:
+    with open("logs.txt", "a") as file:
+      time = datetime.now()
+      file.write(f"{time}   Error: unknown stop12 value    ID: {message.from_user.id}    Text: {message.text}\n")
+      bot.send_message(message.from_user.id,"Извините, возникла внутренняя ошибка, попробуйте ещё раз или свяжитесь с технической поддержкой в настройках - /settings")
+
+def end_print_hw(message):
+    if message.text in comma:
+      commander(message)
+    elif message.text == '⬅️ В меню':
+      menu(message)
+    elif message.text == '📄 Показать ещё':
+      f_print_hw(message)
+    else:
+      with open("logs.txt", "a") as file:
+        time = datetime.now()
+        file.write(f"{time}   Error: unknown button key (405 str)    ID: {message.from_user.id}    Text: {message.text}\n")
+
 
 #Menu
 @bot.message_handler(commands=['menu'])
 def menu(message):
   markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+  hw_btn = types.KeyboardButton('📄 Показать д/з')
   add_btn = types.KeyboardButton('➕ Записать д/з')
-  print_btn = types.KeyboardButton('🔢 Показать дз')
+  print_btn = types.KeyboardButton('🔢 Показать расписание')
   #settings_btn = types.KeyboardButton('⚙️ Настройки')
-  markup.add(add_btn, print_btn)#, settings_btn)
+  markup.add(hw_btn, add_btn, print_btn)#, settings_btn)
   bot.send_message(message.from_user.id, 'Меню', reply_markup=markup)
   bot.register_next_step_handler(message, register_menu)
 
@@ -384,8 +506,10 @@ def register_menu(message):
     commander(message)
   elif message.text == '➕ Записать д/з':
     f_enter_dz(message)
-  elif message.text == '🔢 Показать дз':
+  elif message.text == '🔢 Показать расписание':
     f_print_dz(message)
+  elif message.text == '📄 Показать д/з':
+    f_print_hw(message)
   elif message.text == '⚙️ Настройки':
     #bot.answer_callback_query(callback_query_id=message.from_user.id, text="⚙️ В разработке ⚙️", show_alert=True)
     bot.register_next_step_handler(message, menu)
