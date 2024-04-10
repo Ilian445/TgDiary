@@ -345,7 +345,7 @@ def print_dz(message):
 
   if stop12 == 'False':
     markup.add(algebra_btn, geometry_btn, art_btn, music_btn, technology_btn, it_btn, biology_btn, chemestry_btn, physics_btn, lang_btn, obj_btn,lit_btn,ru_btn,sf_btn,history_btn,geography_btn, end_btn, menu_btn)
-    bot.send_message(message.from_user.id, f'Введите предмет:', reply_markup=markup)
+    bot.send_message(message.from_user.id, f'Введите предметы, чтобы получить дз нажмите кнопку "Показать расписание":', reply_markup=markup)
     bot.register_next_step_handler(message,print_dz)
 
   elif stop12 == 'True':
