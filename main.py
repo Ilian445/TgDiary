@@ -9,7 +9,7 @@ import os
 
 
 #Настройки версии
-version = '2.1a'
+version = '2.2a'
 
 #Настройка бота
 token='6937325461:AAEG0fj7BhnR9mvz0Q2DAMgHluN33F1o_VY'
