@@ -686,7 +686,7 @@ def donate(message):
   markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
   menu_btn = types.KeyboardButton('⬅️ В меню')
   markup.add(menu_btn)
-  bot.send_message(message.from_user.id, 'Задонатить на хостинг или печеньки разработчику можно тут, пожалуйста в комментариях к переводу указывайте что это донат и на что он)))\nСБП: 89136307707\nTinkoff: 2200700771729976\nAlfa-bank: 2200150959802023\nСбербанк: 2202206397626115\nTON: EQDOi-f39PBbaD_1kO6zNZVacjVPwrk_JZnphuzIw_hq-Voy\nТакже вы можете поддержать подпиской на Telegram-канал: @ilian445_ch', reply_markup=markup)
+  bot.send_message(message.from_user.id, 'Задонатить на хостинг или печеньки разработчику можно тут, пожалуйста в комментариях к переводу указывайте что это донат и на что он)))\nTinkoff: 2200700771729976\nAlfa-bank: 2200150959802023\nСбербанк: 2202206397626115\nTON: EQDOi-f39PBbaD_1kO6zNZVacjVPwrk_JZnphuzIw_hq-Voy\nТакже вы можете поддержать подпиской на Telegram-канал: @ilian445_ch', reply_markup=markup)
   bot.register_next_step_handler(message, reg_donate)
 
 def reg_donate(message):
