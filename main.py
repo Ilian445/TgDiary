@@ -9,16 +9,16 @@ import os
 
 
 #Настройки версии
-version = '2.2a'
+version = '2.3'
 
 #Настройка бота
-token='6937325461:AAEG0fj7BhnR9mvz0Q2DAMgHluN33F1o_VY'
+token=os.environ.get('TOKEN')
 
 bot=telebot.TeleBot(token)
 
 dz = ''
 
-comma =['/start', '/help', '/donate', '/print', '/menu', '/enter', '/settings', '/russian', '/literature', '/history', '/sf', '/geography', '/obj', '/lang', '/physics', '/chemestry', '/biology', '/it', '/technology', '/music', '/art', '/geometry', '/algebra']
+comma =['/start', '/dz', '/schedule', '/hw', '/homework', '/help', '/donate', '/print', '/menu', '/enter', '/settings', '/russian', '/literature', '/history', '/sf', '/geography', '/obj', '/lang', '/physics', '/chemestry', '/biology', '/it', '/technology', '/music', '/art', '/geometry', '/algebra']
 
 
 
@@ -30,13 +30,21 @@ def commander(message):
   elif message.text == '/donate':
     donate(message)
   elif message.text == '/print':
-    f_print_dz(message)
+    f_print_hw(message)
   elif message.text == '/menu':
     menu(message)
   elif message.text == '/enter':
     f_enter_dz(message)
   elif message.text == '/settings':
     settings(message)
+  elif message.text == '/schedule':
+    f_print_dz(message)
+  elif message.text == '/dz':
+    f_print_dz(message)
+  elif message.text == '/hw':
+    f_print_hw()
+  elif message.text == '/homework':
+    f_print_hw()
   elif message.text == '/russian' or '/literature' or '/history' or '/sf' or '/geography' or '/obj' or '/lang' or '/physics' or '/chemestry' or '/biology' or '/it' or '/technology' or '/music' or '/art' or '/geometry' or '/algebra':
     sci(message)
   else:
@@ -57,7 +65,7 @@ def write(id, text, subject, message):
     conn.close()
 
   #global message
-  conn = sqlite3.connect('data.db')
+  conn = sqlite3.connect('data/data.db')
   cur = conn.cursor()
 
   markup2 = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -68,6 +76,8 @@ def write(id, text, subject, message):
 
   if message.text in comma:
     commander(message)
+    cur.close()
+    conn.close()
   elif subject == 'geometry':
     cur.execute(f"UPDATE data SET geometry = '{text}' WHERE id = '{id}'")
     conn.commit()
@@ -163,7 +173,7 @@ def write(id, text, subject, message):
 #Функция чтения
 def read(id, subject):
   global dz_text
-  conn = sqlite3.connect('data.db')
+  conn = sqlite3.connect('data/data.db')
   cur = conn.cursor()
 
   cur.execute(f'SELECT ({subject}) FROM data WHERE id = ({id})')
@@ -183,7 +193,7 @@ def start_message(message):
   id = message.from_user.id
 
   #Подключение к бд
-  conn = sqlite3.connect('data.db')
+  conn = sqlite3.connect('data/data.db')
   cur = conn.cursor()
 
   #Достаём список пользователей из бд
@@ -368,7 +378,7 @@ def print_dz(message):
       file.write(f"{time}   Error: unknown stop12 value    ID: {message.from_user.id}    Text: {message.text}\n")
       bot.send_message(message.from_user.id,"Извините, возникла внутренняя ошибка, попробуйте ещё раз или свяжитесь с технической поддержкой в настройках - /settings")
 
-@bot.message_handler(commands=['print', 'hw', 'homework', 'dz'])
+@bot.message_handler(commands=['print', 'hw', 'homework'])
 def f_print_hw(message):
   global dz
   dz = ''
@@ -649,7 +659,7 @@ def help(message):
   markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
   menu_btn = types.KeyboardButton('⬅️ В меню')
   markup.add(menu_btn)
-  bot.send_message(message.from_user.id, f'Привет, {message.from_user.first_name}! Этот бот поможет тебе вести школьный дневник прямо в телеграм, для того, чтобы перейти в основное меню используй /menu, также для быстрого доступа к записи и выводу дз можно исользовать команды /enter и /print. Проект полностью бесплатный, поэтому раззработчик будет очень рад донатикам, реквизиты можно глянуть здесь - /donate. Для быстрого доступа к записи или чтению дз по одному предмету используй:\n/russian\n/literature\n/history\n/sf\n/geography\n/obj\n/lang\n/physics\n/chemestry\n/biology\n/it\n/technology\n/music\n/art\n/geometry\n/algebra\n Чтобы просмотреть дз по предметами, просто введи команду предмета, а чтобы записать введи команду предмета и через пробел дз.\nНа этом вроде всё, если понадобиться помощь, то обращайся - /help\n\nРазработчик: @ilian445_meta\nВерсия: {version}', reply_markup=markup)
+  bot.send_message(message.from_user.id, f'Привет, {message.from_user.first_name}! Этот бот поможет тебе вести школьный дневник прямо в телеграм, для того, чтобы перейти в основное меню используй /menu, также для быстрого доступа к записи и выводу дз можно исользовать команды /enter и /print. Чтобы составить и просмотреть расписание используй /schedule. Проект полностью бесплатный, поэтому раззработчик будет очень рад донатикам, реквизиты можно глянуть здесь - /donate. Для быстрого доступа к записи или чтению дз по одному предмету используй:\n/russian - Русский\n/literature - Литература\n/history - История\n/sf - Обществознание\n/geography - География\n/obj - Обж\n/lang - Инстранный язык\n/physics - Физика\n/chemestry - Химия\n/biology - Биология\n/it - Информатика\n/technology - Технология\n/music - Музыка\n/art - ИЗО\n/geometry - Геометрия\n/algebra - Алгебра\n Чтобы просмотреть дз по предметами, просто введи команду предмета, а чтобы записать введи команду предмета и через пробел дз.\nНа этом вроде всё, если понадобиться помощь, то обращайся - /help\n\nРазработчик: @ilian445_meta\nВерсия: {version}\nGitHub проекта: https://github.com/Ilian445/tgdiary', reply_markup=markup)
   bot.register_next_step_handler(message, reg_help)
 
 def reg_help(message):
@@ -724,7 +734,6 @@ def sci(message):
     #Пишем в бд
     write(message.from_user.id, hw, subject01, message)
       
-
 def reg_sci(message):
   if message.text in comma:
     commander(message)
